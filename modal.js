@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 250,
     borderRadius: 15,
-    alignItems: "center",  
+    alignItems: "center",
   },
   modalHeader: {
     width: "100%",
