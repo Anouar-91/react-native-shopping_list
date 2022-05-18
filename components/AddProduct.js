@@ -1,6 +1,8 @@
-import { StyleSheet, View, TextInput, Button, Modal } from 'react-native';
+import { StyleSheet, View, TextInput, Modal } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import ButtonComponent from './ButtonComponent'
+import InputComponent from './InputComponent'
+import BodyText from './BodyText'
 
 const AddProduct = ({ addProduct, displayModal, cancelNewProduct }) => {
   const [product, setProduct] = useState('')
@@ -16,7 +18,9 @@ const AddProduct = ({ addProduct, displayModal, cancelNewProduct }) => {
   }, [product])
 
   const inputHandler = (val) => {
-    setProduct(val)
+
+    const regex = /[^a-z]/gi
+    setProduct(val.replace(regex, ""));
   }
 
   const handleClick = () => {
@@ -30,11 +34,14 @@ const AddProduct = ({ addProduct, displayModal, cancelNewProduct }) => {
       animationType="slide"
     >
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Nouveau produit"
-          onChangeText={inputHandler}
-          value={product}
+        <BodyText>Veuillez indiquer un produit : </BodyText>
+        <InputComponent 
+         style={styles.textInput}
+         textPlaceholder="Nouveau produit"
+         onChangeHandler={inputHandler}
+         inputValue={product}
+         maxLength={10}
+
         />
         <View style={styles.btnContainer}>
           <ButtonComponent onPressHandler={handleClick} style={styles.btnBlue}>Valider</ButtonComponent>
@@ -54,13 +61,12 @@ const styles = StyleSheet.create({
     padding: 24
   },
   textInput: {
-    borderColor: "grey",
-    borderWidth: 1,
     padding: 5,
-    paddingLeft: 9,
     fontSize: 18,
+    textAlign: "center",
     //flexGrow:1
-    marginBottom: 9
+    marginBottom: 15,
+    borderRadius:20
   },
   btnContainer: {
     flexDirection:"row",

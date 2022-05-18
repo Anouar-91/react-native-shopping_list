@@ -5,13 +5,28 @@ import AddProduct from './components/AddProduct'
 import DismissKeyboard from './components/DismissKeyboard'
 import ButtonComponent from './components/ButtonComponent';
 import Header from './components/Header'
-
+import Colors from './constants/colors'
+import AppLoading from 'expo-app-loading';
+import {useFonts, Bangers_400Regular } from '@expo-google-fonts/bangers'
+ 
 export default function App() {
 
   const [products, setProducts] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [displayModal, setDisplayModal] = useState(false)
 
+  const [fontsLoaded, error] = useFonts({
+    BangersRegular: Bangers_400Regular,
+    'inter-Bold' : require('./assets/fonts/Inter-Bold.ttf'),
+    'inter-Regular' : require('./assets/fonts/Inter-Regular.ttf'),
+    'pacifico-Regular' : require('./assets/fonts/Pacifico-Regular.ttf')
+  })
+  if(!fontsLoaded){
+    return (
+      <AppLoading 
+      />
+    )
+  }
 
   const addProduct = (name) => {
     if (name.length > 2) {
@@ -112,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.2)"
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     width: "90%",
     height: 300,
     borderRadius: 15,
@@ -163,7 +178,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   btnAddProduct: {
-    backgroundColor: "darkred",
+    backgroundColor: Colors.danger,
     padding: 20,
     borderRadius: 30,
     borderWidth: 3,
