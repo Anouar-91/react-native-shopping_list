@@ -3,13 +3,7 @@ import React from 'react';
 
 const Product = ({name, deleteProduct, idString}) => {
     return (
-        <Pressable 
-        style={({pressed}) =>[
-            {backgroundColor: pressed ? "red" : "blue"}
-        ]}
-        onPress={() => deleteProduct(idString)}
-
-        >
+        <Pressable onPress={() => deleteProduct(idString)}>
             <View style={styles.items} >
                 <Text style={styles.element}>{name}</Text>
             </View>
@@ -19,11 +13,11 @@ const Product = ({name, deleteProduct, idString}) => {
 
 const styles = StyleSheet.create({
 items:{
-    marginTop:5
-
+    marginTop:5,
 },
 element: {
-  backgroundColor:"#ffb6c1",
+  backgroundColor:"mediumseagreen",
+  color:"white",
   padding: 5,
 
 }

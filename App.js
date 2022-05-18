@@ -1,12 +1,16 @@
-import { StyleSheet, View, FlatList, Alert, Modal, Text, Pressable } from 'react-native';
+import { StyleSheet, View, FlatList, Image, Modal, Text, Pressable, Button, ImageBackground } from 'react-native';
 import { useState, useEffect } from 'react'
 import Product from './components/Product'
 import AddProduct from './components/AddProduct'
+import DismissKeyboard from './components/DismissKeyboard'
+import ButtonComponent from './components/ButtonComponent';
+import Header from './components/Header'
 
 export default function App() {
 
   const [products, setProducts] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const [displayModal, setDisplayModal] = useState(false)
 
 
   const addProduct = (name) => {
@@ -19,54 +23,75 @@ export default function App() {
     }
   }
 
+  const cancelNewProduct = () => {
+    setDisplayModal(false)
+  }
   const deleteProduct = (key) => {
     setProducts(currentMyProducts => {
       return currentMyProducts.filter(product => product.key !== key)
     })
-
   }
   return (
-    <View style={styles.container}>
-      <Modal
-        visible={showModal}
-        onRequestClose={() => setShowModal(false)}
-        animationType="fade"
-        hardwareAccelerated={true}
-        transparent={true}
+    <DismissKeyboard>
+      <ImageBackground
+        style={styles.bgImage}
+        source={{ uri: "https://cdn.pixabay.com/photo/2021/08/18/19/12/abstract-background-6556364_1280.jpg" }}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <Text styles={styles.modalHeaderText}>OUPS !!</Text>
-            </View>
-            <View style={styles.modalBody}>
-              <Text style={styles.modalBodyText}>Merci d'inscire au minimum 2 caractères.</Text>
-            </View>
-            <View style={styles.modalFooter}>
-              <Pressable style={styles.pressableBtnModal} onPress={() => setShowModal(false)}>
-                <Text style={styles.modalBtn}>OK</Text>
+        <Header />
+        <View style={styles.container}>
+        <Modal
+          visible={showModal}
+          onRequestClose={() => setShowModal(false)}
+          animationType="fade"
+          hardwareAccelerated={true}
+          transparent={true}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <View style={styles.modalHeader}>
+                <Text styles={styles.modalHeaderText}>OUPS !!</Text>
+              </View>
+              <View style={styles.modalBody}>
 
-              </Pressable>
+                <Image
+                  source={require('./assets/cross_red.png')}
+                  /*               source={{uri: "https://cdn.pixabay.com/photo/2014/03/25/15/19/cross-296507_1280.png"}} */
+                  style={styles.crossRed128}
+                />
+
+
+                <Text style={styles.modalBodyText}>Merci d'inscire au minimum 2 caractères.</Text>
+              </View>
+              <View style={styles.modalFooter}>
+                <Pressable style={styles.pressableBtnModal} onPress={() => setShowModal(false)}>
+                  <Text style={styles.modalBtn}>OK</Text>
+
+                </Pressable>
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-      <AddProduct addProduct={addProduct} />
-      <View style={styles.items}>
-        <FlatList
-          data={products}
-          renderItem={({ item }) => <Product deleteProduct={deleteProduct} name={item.name} idString={item.key} />}
+        </Modal>
+        <ButtonComponent onPressHandler={() => setDisplayModal(true)} style={styles.btnAddProduct} >Nouveau produit</ButtonComponent>
 
-        />
-      </View>
-    </View>
+        <AddProduct addProduct={addProduct} displayModal={displayModal} cancelNewProduct={cancelNewProduct} />
+        <View style={styles.items}>
+          <FlatList
+            data={products}
+            renderItem={({ item }) => <Product deleteProduct={deleteProduct} name={item.name} idString={item.key} />}
+          />
+
+        </View>
+        </View>
+      </ImageBackground>
+    </DismissKeyboard>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 40,
-    paddingTop: 60
+    paddingTop: 60,
+    flex: 1,
   },
   inputContainer: {
     flexDirection: "row",
@@ -89,9 +114,9 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     width: "90%",
-    height: 250,
+    height: 300,
     borderRadius: 15,
-    alignItems: "center",  
+    alignItems: "center",
   },
   modalHeader: {
     width: "100%",
@@ -132,6 +157,21 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     padding: 16,
+  },
+  crossRed128: {
+    width: 100,
+    height: 100,
+  },
+  btnAddProduct: {
+    backgroundColor: "darkred",
+    padding: 20,
+    borderRadius: 30,
+    borderWidth: 3,
+    borderColor: "white",
+    marginBottom:20,
+  },
+  bgImage:{
+    flex:1,
   }
 
 });
