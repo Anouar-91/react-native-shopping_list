@@ -24,12 +24,9 @@ items:{
     padding: 15
 },
 element: {
-  backgroundColor:"mediumseagreen",
   color:"white",
   fontSize:17,
   marginLeft:20,
-  
-
 }
 });
 

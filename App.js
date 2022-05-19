@@ -89,7 +89,7 @@ export default function App() {
         <ButtonComponent onPressHandler={() => setDisplayModal(true)} style={styles.btnAddProduct} >Nouveau produit</ButtonComponent>
 
         <AddProduct addProduct={addProduct} displayModal={displayModal} cancelNewProduct={cancelNewProduct} />
-        <View style={styles.items}>
+        <View style={{marginBottom:80}}>
           <FlatList
             data={products}
             renderItem={({ item }) => <Product deleteProduct={deleteProduct} name={item.name} idString={item.key} />}
