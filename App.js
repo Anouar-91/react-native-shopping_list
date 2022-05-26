@@ -46,6 +46,7 @@ export default function App() {
       return currentMyProducts.filter(product => product.key !== key)
     })
   }
+  console.log(products)
   return (
     <DismissKeyboard>
       <ImageBackground
